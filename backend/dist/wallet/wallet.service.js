@@ -19,6 +19,36 @@ let WalletService = class WalletService {
         this.wallets.set(wallet.id, wallet);
         return wallet;
     }
+    fund(walletId, amount) {
+        const wallet = this.wallets.get(walletId);
+        if (!wallet) {
+            throw new common_1.NotFoundException('Wallet not found');
+        }
+        wallet.balance += amount;
+        return wallet;
+    }
+    transfer(fromId, toId, amount) {
+        if (fromId === toId) {
+            throw new common_1.BadRequestException('Cannot transfer to the same wallet');
+        }
+        const sender = this.wallets.get(fromId);
+        const receiver = this.wallets.get(toId);
+        if (!sender) {
+            throw new common_1.NotFoundException('Sender wallet not found');
+        }
+        if (!receiver) {
+            throw new common_1.NotFoundException('Receiver wallet not found');
+        }
+        if (sender.balance < amount) {
+            throw new common_1.BadRequestException('Insufficient balance');
+        }
+        sender.balance -= amount;
+        receiver.balance += amount;
+        return {
+            fromWallet: sender,
+            toWallet: receiver,
+        };
+    }
 };
 exports.WalletService = WalletService;
 exports.WalletService = WalletService = __decorate([
