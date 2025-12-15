@@ -8,7 +8,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WalletService = void 0;
 const common_1 = require("@nestjs/common");
+const crypto_1 = require("crypto");
+const wallet_entity_1 = require("./entities/wallet.entity");
 let WalletService = class WalletService {
+    constructor() {
+        this.wallets = new Map();
+    }
+    create(currency) {
+        const wallet = new wallet_entity_1.Wallet((0, crypto_1.randomUUID)(), currency, 0);
+        this.wallets.set(wallet.id, wallet);
+        return wallet;
+    }
 };
 exports.WalletService = WalletService;
 exports.WalletService = WalletService = __decorate([
