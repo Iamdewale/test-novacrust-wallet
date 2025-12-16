@@ -1,141 +1,330 @@
 {
-  "info": {
-    "_postman_id": "a9c7c7d1-9f4c-4c91-b9d1-111111111111",
-    "name": "Wallet Service API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": "Postman collection for the NestJS Wallet Service take-home test"
-  },
-  "variable": [
-    {
-      "key": "base_url",
-      "value": "http://localhost:3000"
-    },
-    {
-      "key": "walletAId",
-      "value": ""
-    },
-    {
-      "key": "walletBId",
-      "value": ""
-    }
-  ],
-  "item": [
-    {
-      "name": "Create Wallet A",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "url": {
-          "raw": "{{base_url}}/wallets",
-          "host": ["{{base_url}}"],
-          "path": ["wallets"]
-        },
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"currency\": \"USD\"\n}"
-        }
-      },
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "const res = pm.response.json();",
-              "pm.collectionVariables.set('walletAId', res.id);"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "Create Wallet B",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "url": {
-          "raw": "{{base_url}}/wallets",
-          "host": ["{{base_url}}"],
-          "path": ["wallets"]
-        },
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"currency\": \"USD\"\n}"
-        }
-      },
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "const res = pm.response.json();",
-              "pm.collectionVariables.set('walletBId', res.id);"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "Fund Wallet A",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "url": {
-          "raw": "{{base_url}}/wallets/{{walletAId}}/fund",
-          "host": ["{{base_url}}"],
-          "path": ["wallets", "{{walletAId}}", "fund"]
-        },
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"amount\": 1000\n}"
-        }
-      }
-    },
-    {
-      "name": "Transfer Funds",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "url": {
-          "raw": "{{base_url}}/wallets/transfer",
-          "host": ["{{base_url}}"],
-          "path": ["wallets", "transfer"]
-        },
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"fromWalletId\": \"{{walletAId}}\",\n  \"toWalletId\": \"{{walletBId}}\",\n  \"amount\": 200\n}"
-        }
-      }
-    },
-    {
-      "name": "Fetch Wallet A Details",
-      "request": {
-        "method": "GET",
-        "url": {
-          "raw": "{{base_url}}/wallets/{{walletAId}}",
-          "host": ["{{base_url}}"],
-          "path": ["wallets", "{{walletAId}}"]
-        }
-      }
-    }
-  ]
+	"info": {
+		"_postman_id": "59bb977f-0963-4364-a19b-a12e39e67f88",
+		"name": "Wallet Service API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45901655",
+		"_collection_link": "https://iamdewale-8214089.postman.co/workspace/iamdewale's-Workspace~dff02125-726b-4263-822c-ed570170b653/collection/45901655-59bb977f-0963-4364-a19b-a12e39e67f88?action=share&source=collection_link&creator=45901655"
+	},
+	"item": [
+		{
+			"name": "Create Wallet",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": [
+				{
+					"name": "Create Wallet",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"currency\": \"USD\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/wallets",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"wallets"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "92"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"5c-olmqm9SkPr/uz/SqvkxnPUh0Pf8\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 16 Dec 2025 12:35:48 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"b1ba5e67-87bd-4b2f-a4dc-3f411a6ff776\",\n    \"currency\": \"USD\",\n    \"balance\": 0,\n    \"transactions\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "Fund Wallet",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": [
+				{
+					"name": "Fund Wallet",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"amount\": 500\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/wallets/{{walletBId}}/fund",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"wallets",
+								"{{walletBId}}",
+								"fund"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "415"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"19f-f6iHgLnYTK1hgqRUbXW2j6SPgHc\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 16 Dec 2025 12:38:06 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"d3711a2f-51a0-4a91-aa8c-c5f26996505f\",\n    \"currency\": \"USD\",\n    \"balance\": 58060,\n    \"transactions\": [\n        {\n            \"type\": \"FUND\",\n            \"amount\": 50000,\n            \"date\": \"2025-12-16T11:28:01.771Z\"\n        },\n        {\n            \"type\": \"FUND\",\n            \"amount\": 5000,\n            \"date\": \"2025-12-16T11:28:09.500Z\"\n        },\n        {\n            \"type\": \"TRANSFER_IN\",\n            \"amount\": 2560,\n            \"date\": \"2025-12-16T11:28:53.776Z\",\n            \"relatedWalletId\": \"dbddd441-1996-4426-89b4-c3abf976867a\"\n        },\n        {\n            \"type\": \"FUND\",\n            \"amount\": 500,\n            \"date\": \"2025-12-16T12:38:06.113Z\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Transfer Wallet",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": [
+				{
+					"name": "Transfer Wallet",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fromWalletId\": \"{{walletCId}}\",\r\n  \"toWalletId\": \"{{walletBId}}\",\r\n  \"amount\": 50\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/wallets/transfer",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"wallets",
+								"transfer"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "982"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"3d6-xbB+DTdjUuihhXKe9xH0ghe2q9Q\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 16 Dec 2025 12:41:53 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"fromWallet\": {\n        \"id\": \"b1ba5e67-87bd-4b2f-a4dc-3f411a6ff776\",\n        \"currency\": \"USD\",\n        \"balance\": 89950,\n        \"transactions\": [\n            {\n                \"type\": \"FUND\",\n                \"amount\": 89500,\n                \"date\": \"2025-12-16T12:37:49.221Z\"\n            },\n            {\n                \"type\": \"TRANSFER_IN\",\n                \"amount\": 500,\n                \"date\": \"2025-12-16T12:41:29.543Z\",\n                \"relatedWalletId\": \"dbddd441-1996-4426-89b4-c3abf976867a\"\n            },\n            {\n                \"type\": \"TRANSFER_OUT\",\n                \"amount\": 50,\n                \"date\": \"2025-12-16T12:41:53.060Z\",\n                \"relatedWalletId\": \"d3711a2f-51a0-4a91-aa8c-c5f26996505f\"\n            }\n        ]\n    },\n    \"toWallet\": {\n        \"id\": \"d3711a2f-51a0-4a91-aa8c-c5f26996505f\",\n        \"currency\": \"USD\",\n        \"balance\": 58110,\n        \"transactions\": [\n            {\n                \"type\": \"FUND\",\n                \"amount\": 50000,\n                \"date\": \"2025-12-16T11:28:01.771Z\"\n            },\n            {\n                \"type\": \"FUND\",\n                \"amount\": 5000,\n                \"date\": \"2025-12-16T11:28:09.500Z\"\n            },\n            {\n                \"type\": \"TRANSFER_IN\",\n                \"amount\": 2560,\n                \"date\": \"2025-12-16T11:28:53.776Z\",\n                \"relatedWalletId\": \"dbddd441-1996-4426-89b4-c3abf976867a\"\n            },\n            {\n                \"type\": \"FUND\",\n                \"amount\": 500,\n                \"date\": \"2025-12-16T12:38:06.113Z\"\n            },\n            {\n                \"type\": \"TRANSFER_IN\",\n                \"amount\": 50,\n                \"date\": \"2025-12-16T12:41:53.060Z\",\n                \"relatedWalletId\": \"b1ba5e67-87bd-4b2f-a4dc-3f411a6ff776\"\n            }\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Fetch Wallet",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": [
+				{
+					"name": "Fetch Wallet",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/wallets/{{walletAId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"wallets",
+								"{{walletAId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "482"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1e2-hU5VcjySUS7bFJIc7dRc28VksDw\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 16 Dec 2025 12:42:58 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"dbddd441-1996-4426-89b4-c3abf976867a\",\n    \"currency\": \"USD\",\n    \"balance\": 56940,\n    \"transactions\": [\n        {\n            \"type\": \"FUND\",\n            \"amount\": 50000,\n            \"date\": \"2025-12-16T11:27:47.735Z\"\n        },\n        {\n            \"type\": \"TRANSFER_OUT\",\n            \"amount\": 2560,\n            \"date\": \"2025-12-16T11:28:53.776Z\",\n            \"relatedWalletId\": \"d3711a2f-51a0-4a91-aa8c-c5f26996505f\"\n        },\n        {\n            \"type\": \"FUND\",\n            \"amount\": 10000,\n            \"date\": \"2025-12-16T12:37:15.450Z\"\n        },\n        {\n            \"type\": \"TRANSFER_OUT\",\n            \"amount\": 500,\n            \"date\": \"2025-12-16T12:41:29.543Z\",\n            \"relatedWalletId\": \"b1ba5e67-87bd-4b2f-a4dc-3f411a6ff776\"\n        }\n    ]\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": ""
+		},
+		{
+			"key": "walletAId",
+			"value": ""
+		},
+		{
+			"key": "walletBId",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "walletCId",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "wallet_id",
+			"value": ""
+		}
+	]
 }
