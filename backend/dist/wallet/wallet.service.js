@@ -15,6 +15,7 @@ let WalletService = class WalletService {
     constructor() {
         this.wallets = new Map();
     }
+    //   create(currency: "USD"): Wallet  
     create(currency) {
         const wallet = new wallet_entity_1.Wallet((0, crypto_1.randomUUID)(), currency, 0);
         this.wallets.set(wallet.id, wallet);
@@ -30,6 +31,9 @@ let WalletService = class WalletService {
         return wallet;
     }
     transfer(fromId, toId, amount) {
+        if (amount <= 0) {
+            throw new common_1.BadRequestException("Amount must be greater than zero");
+        }
         if (fromId === toId) {
             throw new common_1.BadRequestException("Cannot transfer to the same wallet");
         }
@@ -48,6 +52,10 @@ let WalletService = class WalletService {
         receiver.balance += amount;
         sender.transactions.push(new transaction_entity_1.Transaction("TRANSFER_OUT", amount, new Date(), receiver.id));
         receiver.transactions.push(new transaction_entity_1.Transaction("TRANSFER_IN", amount, new Date(), sender.id));
+        return {
+            fromWallet: sender,
+            toWallet: receiver,
+        };
     }
     findById(walletId) {
         const wallet = this.wallets.get(walletId);

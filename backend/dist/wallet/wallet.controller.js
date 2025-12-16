@@ -16,18 +16,15 @@ exports.WalletController = void 0;
 const common_1 = require("@nestjs/common");
 const wallet_service_1 = require("./wallet.service");
 const create_wallet_dto_1 = require("./dto/create-wallet.dto");
-const common_2 = require("@nestjs/common");
 const fund_wallet_dto_1 = require("./dto/fund-wallet.dto");
 const transfer_dto_1 = require("./dto/transfer.dto");
 let WalletController = class WalletController {
     constructor(walletService) {
         this.walletService = walletService;
     }
-    test() {
-        return { ok: true };
-    }
     create(dto) {
-        return this.walletService.create(dto.currency.toUpperCase());
+        const currency = dto.currency?.toUpperCase() ?? "USD";
+        return this.walletService.create(currency);
     }
     fund(id, dto) {
         return this.walletService.fund(id, dto.amount);
@@ -41,12 +38,6 @@ let WalletController = class WalletController {
 };
 exports.WalletController = WalletController;
 __decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], WalletController.prototype, "test", null);
-__decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -55,7 +46,7 @@ __decorate([
 ], WalletController.prototype, "create", null);
 __decorate([
     (0, common_1.Post)(":id/fund"),
-    __param(0, (0, common_2.Param)("id")),
+    __param(0, (0, common_1.Param)("id")),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, fund_wallet_dto_1.FundWalletDto]),
@@ -71,7 +62,7 @@ __decorate([
 ], WalletController.prototype, "transfer", null);
 __decorate([
     (0, common_1.Get)(":id"),
-    __param(0, (0, common_2.Param)("id")),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)

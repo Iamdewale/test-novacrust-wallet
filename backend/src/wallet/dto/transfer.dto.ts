@@ -1,4 +1,5 @@
 import { IsUUID, IsNumber, IsPositive } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class TransferDto {
   @IsUUID()
@@ -9,5 +10,6 @@ export class TransferDto {
 
   @IsNumber()
   @IsPositive()
+  @Type(() => Number)
   amount: number;
 }

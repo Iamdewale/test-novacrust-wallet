@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TransferDto = void 0;
 const class_validator_1 = require("class-validator");
+const class_transformer_1 = require("class-transformer");
 class TransferDto {
 }
 exports.TransferDto = TransferDto;
@@ -25,5 +26,6 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsPositive)(),
+    (0, class_transformer_1.Type)(() => Number),
     __metadata("design:type", Number)
 ], TransferDto.prototype, "amount", void 0);
