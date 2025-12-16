@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, HttpCode } from '@nestjs/common';
 import { WalletService } from './wallet.service';
 import { CreateWalletDto } from './dto/create-wallet.dto';
 import { Param } from '@nestjs/common';
@@ -26,6 +26,7 @@ export class WalletController {
     }
 
     @Post('transfer')
+    @HttpCode(200)
 transfer(@Body() dto: TransferDto) {
   return this.walletService.transfer(
     dto.fromWalletId,
