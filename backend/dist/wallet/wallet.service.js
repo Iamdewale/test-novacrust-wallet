@@ -10,6 +10,7 @@ exports.WalletService = void 0;
 const common_1 = require("@nestjs/common");
 const crypto_1 = require("crypto");
 const wallet_entity_1 = require("./entities/wallet.entity");
+const transaction_entity_1 = require("./entities/transaction.entity");
 let WalletService = class WalletService {
     constructor() {
         this.wallets = new Map();
@@ -22,32 +23,38 @@ let WalletService = class WalletService {
     fund(walletId, amount) {
         const wallet = this.wallets.get(walletId);
         if (!wallet) {
-            throw new common_1.NotFoundException('Wallet not found');
+            throw new common_1.NotFoundException("Wallet not found");
         }
         wallet.balance += amount;
+        wallet.transactions.push(new transaction_entity_1.Transaction("FUND", amount));
         return wallet;
     }
     transfer(fromId, toId, amount) {
         if (fromId === toId) {
-            throw new common_1.BadRequestException('Cannot transfer to the same wallet');
+            throw new common_1.BadRequestException("Cannot transfer to the same wallet");
         }
         const sender = this.wallets.get(fromId);
         const receiver = this.wallets.get(toId);
         if (!sender) {
-            throw new common_1.NotFoundException('Sender wallet not found');
+            throw new common_1.NotFoundException("Sender wallet not found");
         }
         if (!receiver) {
-            throw new common_1.NotFoundException('Receiver wallet not found');
+            throw new common_1.NotFoundException("Receiver wallet not found");
         }
         if (sender.balance < amount) {
-            throw new common_1.BadRequestException('Insufficient balance');
+            throw new common_1.BadRequestException("Insufficient balance");
         }
         sender.balance -= amount;
         receiver.balance += amount;
-        return {
-            fromWallet: sender,
-            toWallet: receiver,
-        };
+        sender.transactions.push(new transaction_entity_1.Transaction("TRANSFER_OUT", amount, new Date(), receiver.id));
+        receiver.transactions.push(new transaction_entity_1.Transaction("TRANSFER_IN", amount, new Date(), sender.id));
+    }
+    findById(walletId) {
+        const wallet = this.wallets.get(walletId);
+        if (!wallet) {
+            throw new common_1.NotFoundException('Wallet not found');
+        }
+        return wallet;
     }
 };
 exports.WalletService = WalletService;

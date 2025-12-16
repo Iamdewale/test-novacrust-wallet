@@ -35,6 +35,9 @@ let WalletController = class WalletController {
     transfer(dto) {
         return this.walletService.transfer(dto.fromWalletId, dto.toWalletId, dto.amount);
     }
+    getWallet(id) {
+        return this.walletService.findById(id);
+    }
 };
 exports.WalletController = WalletController;
 __decorate([
@@ -51,22 +54,29 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], WalletController.prototype, "create", null);
 __decorate([
-    (0, common_1.Post)(':id/fund'),
-    __param(0, (0, common_2.Param)('id')),
+    (0, common_1.Post)(":id/fund"),
+    __param(0, (0, common_2.Param)("id")),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, fund_wallet_dto_1.FundWalletDto]),
     __metadata("design:returntype", void 0)
 ], WalletController.prototype, "fund", null);
 __decorate([
-    (0, common_1.Post)('transfer'),
+    (0, common_1.Post)("transfer"),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [transfer_dto_1.TransferDto]),
     __metadata("design:returntype", void 0)
 ], WalletController.prototype, "transfer", null);
+__decorate([
+    (0, common_1.Get)(":id"),
+    __param(0, (0, common_2.Param)("id")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], WalletController.prototype, "getWallet", null);
 exports.WalletController = WalletController = __decorate([
-    (0, common_1.Controller)('wallets'),
+    (0, common_1.Controller)("wallets"),
     __metadata("design:paramtypes", [wallet_service_1.WalletService])
 ], WalletController);
